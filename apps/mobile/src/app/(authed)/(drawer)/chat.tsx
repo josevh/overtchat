@@ -173,6 +173,7 @@ function ChatSurface({
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchRequested, setSearchRequested] = useState(false);
   const webSearchEnabled = useWebSearchEnabled();
+  const [enterToSend] = useSecureFlag("overtchat.enterToSend", true);
   const pickerRef = useRef<BottomSheetModal>(null);
   const addSheetRef = useRef<BottomSheetModal>(null);
 
@@ -544,6 +545,7 @@ function ChatSurface({
           streaming={streaming}
           searchAvailable={searchAvailable}
           searchRequested={searchAvailable && searchRequested}
+          enterToSend={enterToSend}
           attachments={attachments}
           attachmentMeta={attachmentMeta}
           uploading={uploading}
