@@ -13,11 +13,16 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAuthClient } from "@/lib/auth/client";
 import { setThemePref, useThemePref, type ThemePref } from "@/lib/appearance";
-import { FONT_OPTIONS, FONT_SANS } from "@/lib/fonts";
 import { setFontPref, useFontPref } from "@/lib/fontPref";
+import { FONT_OPTIONS, FONT_SANS } from "@/lib/fonts";
 import { getServerUrl } from "@/lib/server-url";
 import { useTheme } from "@/lib/theme";
-import { setWebSearchEnabled, useWebSearchEnabled } from "@/lib/toolPreferences";
+import {
+  setEnterToSend,
+  setWebSearchEnabled,
+  useEnterToSend,
+  useWebSearchEnabled,
+} from "@/lib/toolPreferences";
 
 export default function SettingsScreen() {
   const { colors, radii, fonts } = useTheme();
@@ -30,6 +35,7 @@ export default function SettingsScreen() {
   const themePref = useThemePref();
   const fontPref = useFontPref();
   const webSearchEnabled = useWebSearchEnabled();
+  const enterToSend = useEnterToSend();
   const [signingOut, setSigningOut] = useState(false);
   const serverUrl = getServerUrl();
   const serverHost = serverUrl ? safeHost(serverUrl) : null;
@@ -142,6 +148,26 @@ export default function SettingsScreen() {
               value={webSearchEnabled}
               onValueChange={setWebSearchEnabled}
               accessibilityLabel="Enable web search"
+            />
+          </Section>
+
+          <Section
+            title="Messages"
+            description="Input behavior saved on this device."
+          >
+            <GroupHeader
+              label="Enter key"
+              sub="What the Enter key does in the message input."
+            />
+            <RadioRow
+              label="Send message"
+              selected={enterToSend}
+              onPress={() => setEnterToSend(true)}
+            />
+            <RadioRow
+              label="New line"
+              selected={!enterToSend}
+              onPress={() => setEnterToSend(false)}
             />
           </Section>
 

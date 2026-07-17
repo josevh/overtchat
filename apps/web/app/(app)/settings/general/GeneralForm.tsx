@@ -37,6 +37,7 @@ import {
 type ThemeValue = "light" | "dark" | "system";
 
 const MESSAGE_STATS_STORAGE_KEY = "overtchat_stats_for_nerds";
+const ENTER_TO_SEND_STORAGE_KEY = "overtchat_enter_to_send";
 
 const OPTIONS: Array<{ value: ThemeValue; label: string; icon: typeof Sun }> = [
   { value: "light", label: "Light", icon: Sun },
@@ -66,6 +67,10 @@ export function GeneralForm() {
       SESSION_COST_STORAGE_KEY,
       DEFAULT_SESSION_COST_ENABLED,
     );
+  const [enterToSend, setEnterToSend] = useLocalStorage<boolean>(
+    ENTER_TO_SEND_STORAGE_KEY,
+    true,
+  );
   const [fontId, setFontId] = useLocalStorage<FontId>(FONT_STORAGE_KEY, DEFAULT_FONT_ID);
   const currentFont = mounted ? fontId : DEFAULT_FONT_ID;
 
@@ -185,6 +190,21 @@ export function GeneralForm() {
             checked={sessionCostEnabled}
             onCheckedChange={(next) => setSessionCostEnabled(next)}
             aria-label="Show session cost"
+          />
+        </SettingsRow>
+
+        <SettingsRow
+          title="Enter to send"
+          description="Press Enter to send the message instead of adding a new line. Shift+Enter always inserts a new line."
+          htmlFor="enter-to-send"
+          align="center"
+          controlAlign="end"
+        >
+          <Switch
+            id="enter-to-send"
+            checked={enterToSend}
+            onCheckedChange={(next) => setEnterToSend(next)}
+            aria-label="Enter key sends message"
           />
         </SettingsRow>
       </SettingsSection>

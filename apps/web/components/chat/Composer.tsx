@@ -33,6 +33,7 @@ import { Menu } from "@base-ui/react/menu";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { useLocalStorage } from "@/lib/useLocalStorage";
 import {
   ATTACH_ACCEPT,
   formatSize,
@@ -138,6 +139,7 @@ export const Composer = forwardRef<ComposerHandle, ComposerProps>(function Compo
 }, ref) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [enterToSend] = useLocalStorage<boolean>("overtchat_enter_to_send", true);
   const handleDraftRestore = useCallback(() => {
     requestAnimationFrame(() => {
       const el = textareaRef.current;
@@ -444,6 +446,7 @@ export const Composer = forwardRef<ComposerHandle, ComposerProps>(function Compo
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (handleMenuKeyDown(e)) return;
+    if (!enterToSend) return;
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       submit();

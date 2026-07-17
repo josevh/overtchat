@@ -49,7 +49,7 @@ import { useChatMessages } from "@/lib/queries/chatMessages";
 import { useModelConfigs } from "@/lib/queries/modelConfigs";
 import type { ChatListItem } from "@/lib/queries/chats";
 import { queryKeys } from "@/lib/queries/keys";
-import { useWebSearchEnabled } from "@/lib/toolPreferences";
+import { useEnterToSend, useWebSearchEnabled } from "@/lib/toolPreferences";
 import { useSpeech } from "@/lib/useSpeech";
 import { useTheme } from "@/lib/theme";
 import { toastError } from "@/lib/toast";
@@ -182,6 +182,7 @@ function ChatSurface({
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchRequested, setSearchRequested] = useState(false);
   const webSearchEnabled = useWebSearchEnabled();
+  const enterToSend = useEnterToSend();
   const pickerRef = useRef<BottomSheetModal>(null);
   const addSheetRef = useRef<BottomSheetModal>(null);
 
@@ -598,6 +599,7 @@ function ChatSurface({
             streaming={streaming}
             searchAvailable={searchAvailable}
             searchRequested={searchAvailable && searchRequested}
+            enterToSend={enterToSend}
             attachments={attachments}
             attachmentMeta={attachmentMeta}
             uploading={uploading}
