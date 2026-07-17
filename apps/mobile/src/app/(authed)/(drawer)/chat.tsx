@@ -161,6 +161,7 @@ function ChatSurface({
     "overtchat.searchEnabled",
     false,
   );
+  const [enterToSend] = useSecureFlag("overtchat.enterToSend", true);
   const pickerRef = useRef<BottomSheetModal>(null);
   const addSheetRef = useRef<BottomSheetModal>(null);
 
@@ -513,7 +514,7 @@ function ChatSurface({
         <Composer
           configured={configured}
           streaming={streaming}
-          searchEnabled={searchEnabled}
+          enterToSend={enterToSend}
           attachments={attachments}
           attachmentMeta={attachmentMeta}
           uploading={uploading}

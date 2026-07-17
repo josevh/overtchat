@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { useLocalStorage } from "@/lib/useLocalStorage";
 import {
   ATTACH_ACCEPT,
   formatSize,
@@ -62,6 +63,7 @@ export const Composer = forwardRef<ComposerHandle, ComposerProps>(function Compo
   isAdmin,
 }, ref) {
   const [input, setInput] = useState("");
+  const [enterToSend] = useLocalStorage<boolean>("overtchat_enter_to_send", true);
   const {
     attachments,
     uploading,
@@ -124,6 +126,7 @@ export const Composer = forwardRef<ComposerHandle, ComposerProps>(function Compo
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (!enterToSend) return;
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       submit();

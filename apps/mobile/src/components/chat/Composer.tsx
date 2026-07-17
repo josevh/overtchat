@@ -19,6 +19,7 @@ export function Composer({
   uploading,
   uploadError,
   isAdmin,
+  enterToSend,
   onDisableSearch,
   onOpenAddSheet,
   onRemoveAttachment,
@@ -34,6 +35,7 @@ export function Composer({
   uploading: boolean;
   uploadError: string | null;
   isAdmin: boolean;
+  enterToSend: boolean;
   onDisableSearch: () => void;
   onOpenAddSheet: () => void;
   onRemoveAttachment: (index: number) => void;
@@ -232,6 +234,8 @@ export function Composer({
             onChangeText={setInput}
             editable={configured && dictation.status !== "transcribing"}
             multiline
+            submitBehavior={enterToSend ? "submit" : "newline"}
+            onSubmitEditing={enterToSend ? submit : undefined}
             placeholder={configured ? "Message…" : "No models configured"}
             placeholderTextColor={colors.mutedForeground}
             style={[
